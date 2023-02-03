@@ -15,17 +15,10 @@ class PriceController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(
+            Price::all(),
+            200
+        );
     }
 
     /**
@@ -36,7 +29,17 @@ class PriceController extends Controller
      */
     public function store(StorePriceRequest $request)
     {
-        //
+        $price = Price::create($request->validated());
+
+        if (!$price) {
+            return response()->json([
+                'message' => 'Error desconhecido!'
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Preço criado com sucesso'
+        ], 201);
     }
 
     /**
@@ -46,17 +49,6 @@ class PriceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Price $price)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Price  $price
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Price $price)
     {
         //
     }
