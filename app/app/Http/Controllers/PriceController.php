@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePriceRequest;
 use App\Http\Requests\UpdatePriceRequest;
 use App\Models\Price;
+use Illuminate\Http\Response;
 
 class PriceController extends Controller
 {
@@ -16,8 +17,12 @@ class PriceController extends Controller
     public function index()
     {
         return response()->json(
-            Price::all(),
-            200
+            Price::all([
+                'id',
+                'name',
+                'description',
+                'price'
+            ])
         );
     }
 
@@ -29,17 +34,17 @@ class PriceController extends Controller
      */
     public function store(StorePriceRequest $request)
     {
-        $price = Price::create($request->validated());
+        $price = Price::create($request->all());
 
         if (!$price) {
             return response()->json([
                 'message' => 'Error desconhecido!'
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
             'message' => 'Preço criado com sucesso'
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -50,7 +55,11 @@ class PriceController extends Controller
      */
     public function show(Price $price)
     {
-        //
+        return response()->json([
+            'name' => $price->name,
+            'description' => $price->description,
+            'price' => $price->price,
+        ]);
     }
 
     /**
@@ -62,7 +71,17 @@ class PriceController extends Controller
      */
     public function update(UpdatePriceRequest $request, Price $price)
     {
-        //
+        $update = $price->update($request->validated());
+
+        if (!$update) {
+            return response()->json([
+                'message' => 'Não foi possivel realizar a atualização'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Preço atualizado com sucesso'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -73,6 +92,16 @@ class PriceController extends Controller
      */
     public function destroy(Price $price)
     {
-        //
+        $destroy = $price->delete();
+
+        if (!$destroy) {
+            return response()->json([
+                'message' => 'Não foi possivel excluir.'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Preço foi excluido com sucesso.'
+        ], Response::HTTP_CREATED);
     }
 }
