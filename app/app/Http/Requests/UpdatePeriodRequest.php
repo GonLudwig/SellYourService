@@ -13,7 +13,7 @@ class UpdatePeriodRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,22 @@ class UpdatePeriodRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'          => 'required',
+            'started_at'    => 'required|date',
+            'ended_at'      => 'required|date'
+        ];
+    }
+
+        /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required'  => 'O campo :attribute é obrigatorio!',
+            'date'      => 'O campo :attribute deve ser um campo de data valido. (Y-m-d h:m:s)'
         ];
     }
 }
