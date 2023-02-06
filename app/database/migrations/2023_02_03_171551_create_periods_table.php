@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->timestamp('started_at');
-            $table->timestamp('ended_at', );
+            $table->timestamp('ended_at');
             $table->timestamps();
         });
     }
