@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePeriodRequest;
 use App\Http\Requests\UpdatePeriodRequest;
 use App\Models\Period;
+use Illuminate\Http\Response;
 
 class PeriodController extends Controller
 {
@@ -15,17 +16,11 @@ class PeriodController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(Period::all([
+            'name',
+            'started_at',
+            'ended_at'
+        ]));
     }
 
     /**
@@ -36,7 +31,17 @@ class PeriodController extends Controller
      */
     public function store(StorePeriodRequest $request)
     {
-        //
+        $period = Period::create($request->all());
+
+        if (!$period) {
+            return response()->json([
+                'message' => 'Error desconhecido!'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Periodo criado com sucesso'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -47,18 +52,11 @@ class PeriodController extends Controller
      */
     public function show(Period $period)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Period  $period
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Period $period)
-    {
-        //
+        return response()->json([
+            'name' => $period->name,
+            'started_at' => $period->started_at,
+            'ended_at' => $period->ended_at
+        ]);
     }
 
     /**
@@ -70,7 +68,17 @@ class PeriodController extends Controller
      */
     public function update(UpdatePeriodRequest $request, Period $period)
     {
-        //
+        $update = $period->update($request->validated());
+
+        if (!$update) {
+            return response()->json([
+                'message' => 'Não foi possivel realizar a atualização'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Preço atualizado com sucesso'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -81,6 +89,16 @@ class PeriodController extends Controller
      */
     public function destroy(Period $period)
     {
-        //
+        $destroy = $period->delete();
+
+        if (!$destroy) {
+            return response()->json([
+                'message' => 'Não foi possivel excluir.'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Preço foi excluido com sucesso.'
+        ], Response::HTTP_CREATED);
     }
 }
