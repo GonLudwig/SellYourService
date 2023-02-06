@@ -14,6 +14,6 @@ class PeriodSeeder extends Seeder
      */
     public function run()
     {
-        //
+        \App\Models\Period::factory(10)->create();
     }
 }

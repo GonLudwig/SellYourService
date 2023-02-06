@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class PeriodFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name(),
+            'started_at' => fake()->dateTimeBetween('-1 month'),
+            'ended_at' => fake()->dateTimeBetween('now', '+1 week'),
         ];
     }
 }

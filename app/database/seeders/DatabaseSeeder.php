@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Period;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +24,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(
-            PriceSeeder::class
+            PriceSeeder::class,
+            PeriodSeeder::class
         );
     }
 }
