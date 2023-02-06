@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PriceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,9 @@ Route::post('/price', [PriceController::class, 'store']);
 Route::get('/price/{price}', [PriceController::class, 'show']);
 Route::put('/price/{price}', [PriceController::class, 'update']);
 Route::delete('/price/{price}', [PriceController::class, 'destroy']);
+
+Route::get('/period', [PeriodController::class, 'index']);
+Route::post('/period', [PeriodController::class, 'store']);
+Route::get('/period/{period}', [PeriodController::class, 'show']);
+Route::put('/period/{period}', [PeriodController::class, 'update']);
+Route::delete('/period/{period}', [PeriodController::class, 'destroy']);
