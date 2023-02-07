@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -15,17 +16,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(Product::all([
+            'id',
+            'name',
+            'description',
+            'price_id',
+            'started_display',
+            'ended_display'
+        ]));
     }
 
     /**
@@ -36,7 +34,17 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create($request->all());
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Error desconhecido!'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Criado com sucesso'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -47,18 +55,14 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        //
+        return response()->json([
+            'id'                => $product->id,
+            'name'              => $product->name,
+            'description'       => $product->description,
+            'price_id'          => $product->price_id,
+            'started_display'   => $product->started_display,
+            'ended_display'     => $product->ended_display
+        ]);
     }
 
     /**
@@ -70,7 +74,17 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $update = $product->update($request->validated());
+
+        if (!$update) {
+            return response()->json([
+                'message' => 'Não foi possivel realizar a atualização'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Preço atualizado com sucesso'
+        ]);
     }
 
     /**
@@ -81,6 +95,16 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $destroy = $product->delete();
+
+        if (!$destroy) {
+            return response()->json([
+                'message' => 'Não foi possivel excluir.'
+            ],Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Foi excluido com sucesso.'
+        ]);
     }
 }
