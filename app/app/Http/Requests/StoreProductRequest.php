@@ -13,7 +13,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,27 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'              => 'required|max:50',
+            'description'       => 'max:200',
+            'price_id'          => 'required|exists:prices,id',
+            'started_display'   => 'required|date',
+            'ended_display'     => 'required|date'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required'          => 'O campo :attribute é obrigatorio!',
+            'date'              => 'O campo :attribute deve ser um campo de data valido. (Y-m-d h:m:s)',
+            'name.max'          => 'O limite maximo de caracteres para este campo e 50.',
+            'description.max'   => 'O limite maximo de caracteres para este campo e 200.',
+            'price_id.exists'   => 'Preço não existe.'
         ];
     }
 }
