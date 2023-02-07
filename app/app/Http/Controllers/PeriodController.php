@@ -17,6 +17,7 @@ class PeriodController extends Controller
     public function index()
     {
         return response()->json(Period::all([
+            'id',
             'name',
             'started_at',
             'ended_at'
@@ -73,12 +74,12 @@ class PeriodController extends Controller
         if (!$update) {
             return response()->json([
                 'message' => 'Não foi possivel realizar a atualização'
-            ]);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
             'message' => 'Preço atualizado com sucesso'
-        ], Response::HTTP_CREATED);
+        ]);
     }
 
     /**
@@ -94,11 +95,11 @@ class PeriodController extends Controller
         if (!$destroy) {
             return response()->json([
                 'message' => 'Não foi possivel excluir.'
-            ]);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
             'message' => 'Preço foi excluido com sucesso.'
-        ], Response::HTTP_CREATED);
+        ]);
     }
 }
