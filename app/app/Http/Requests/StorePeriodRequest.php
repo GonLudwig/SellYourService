@@ -24,13 +24,13 @@ class StorePeriodRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required',
+            'name'          => 'required|max:50',
             'started_at'    => 'required|date',
             'ended_at'      => 'required|date'
         ];
     }
 
-        /**
+    /**
      * Get the error messages for the defined validation rules.
      *
      * @return array
@@ -39,7 +39,8 @@ class StorePeriodRequest extends FormRequest
     {
         return [
             'required'  => 'O campo :attribute é obrigatorio!',
-            'date'      => 'O campo :attribute deve ser um campo de data valido. (Y-m-d h:m:s)'
+            'date'      => 'O campo :attribute deve ser um campo de data valido. (Y-m-d h:m:s)',
+            'name.max'  => 'O campo deve possuir no maximo 50 caracteres.',
         ];
     }
 }
