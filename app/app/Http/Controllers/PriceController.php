@@ -56,9 +56,10 @@ class PriceController extends Controller
     public function show(Price $price)
     {
         return response()->json([
-            'name' => $price->name,
-            'description' => $price->description,
-            'price' => $price->price,
+            'id'            => $price->id,
+            'name'          => $price->name,
+            'description'   => $price->description,
+            'price'         => $price->price,
         ]);
     }
 
@@ -76,12 +77,12 @@ class PriceController extends Controller
         if (!$update) {
             return response()->json([
                 'message' => 'Não foi possivel realizar a atualização'
-            ]);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
-            'message' => 'Preço atualizado com sucesso'
-        ], Response::HTTP_CREATED);
+            'message' => 'Atualização realizada com sucesso'
+        ]);
     }
 
     /**
@@ -97,11 +98,11 @@ class PriceController extends Controller
         if (!$destroy) {
             return response()->json([
                 'message' => 'Não foi possivel excluir.'
-            ]);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
-            'message' => 'Preço foi excluido com sucesso.'
-        ], Response::HTTP_CREATED);
+            'message' => 'Foi excluido com sucesso.'
+        ]);
     }
 }
