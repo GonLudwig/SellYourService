@@ -23,9 +23,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(
+        $this->call([
             PriceSeeder::class,
-            PeriodSeeder::class
-        );
+            PeriodSeeder::class,
+            ProductSeeder::class
+        ]);
     }
 }

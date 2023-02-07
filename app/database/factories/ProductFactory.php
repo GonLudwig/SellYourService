@@ -17,7 +17,10 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name(),
+            'price_id' => fake()->numberBetween(1, 10),
+            'started_display' => fake()->dateTimeBetween('-1 month'),
+            'ended_display' => fake()->dateTimeBetween('now', '+1 week'),
         ];
     }
 }
