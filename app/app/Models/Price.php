@@ -14,4 +14,9 @@ class Price extends Model
         'description',
         'price'
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 }
