@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('price_id')->constrained('prices');
             $table->timestamp('started_display');
             $table->timestamp('ended_display');
-            $table->string('photo', 100);
+            $table->string('photo', 100)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
