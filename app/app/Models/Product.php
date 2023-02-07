@@ -16,6 +16,10 @@ class Product extends Model
         'description',
         'price_id',
         'started_display',
-        'ended_display',
+        'ended_display'
     ];
+
+    public function price(){
+        return $this->belongsTo(Price::class);
+    }
 }
