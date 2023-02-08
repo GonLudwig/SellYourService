@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PriceSeeder::class,
             PeriodSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            ClientSeeder::class,
+            ScheduleSeeder::class
         ]);
     }
 }
