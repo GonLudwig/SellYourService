@@ -13,7 +13,7 @@ class StoreScheduleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,29 @@ class StoreScheduleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'product_id' => 'required|exists:products,id',
+            'period_id' => 'required|exists:periods,id',
+            'client_id' => 'required|exists:clients,id',
+            'check_in' => 'required|date',
+            'check_out' => 'required|date',
+            'confirmation' => 'required|boolean'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatorio!',
+            'date' => 'O campo :attribute deve ser um campo de data valido. (Y-m-d h:m:s)',
+            'confirmation.boolean' => 'O campo precisa ser um valor boolean',
+            'product_id.exists' => 'O produto não existe.',
+            'period_id.exists' => 'O periodo não existe.',
+            'client_id.exists' => 'O cliente não existe.',
         ];
     }
 }
