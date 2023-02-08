@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Schedule;
+use Illuminate\Http\Response;
 
 class ScheduleController extends Controller
 {
@@ -15,17 +16,15 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(Schedule::all([
+            'id',
+            'product_id',
+            'period_id',
+            'client_id',
+            'check_in',
+            'check_out',
+            'confirmation'
+        ]));
     }
 
     /**
@@ -36,7 +35,17 @@ class ScheduleController extends Controller
      */
     public function store(StoreScheduleRequest $request)
     {
-        //
+        $schedule = Schedule::create($request->all());
+
+        if (!$schedule) {
+            return response()->json([
+                'message' => 'Error desconhecido!'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Criado com sucesso'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -47,18 +56,15 @@ class ScheduleController extends Controller
      */
     public function show(Schedule $schedule)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Schedule  $schedule
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Schedule $schedule)
-    {
-        //
+        return response()->json([
+            'id' => $schedule->id,
+            'product_id' => $schedule->product_id,
+            'period_id' => $schedule->period_id,
+            'client_id' => $schedule->client_id,
+            'check_in' => $schedule->check_in,
+            'check_out' => $schedule->check_out,
+            'confirmation' => $schedule->confirmation
+        ]);
     }
 
     /**
@@ -70,7 +76,17 @@ class ScheduleController extends Controller
      */
     public function update(UpdateScheduleRequest $request, Schedule $schedule)
     {
-        //
+        $update = $schedule->update($request->validated());
+
+        if (!$update) {
+            return response()->json([
+                'message' => 'Não foi possivel realizar a atualização'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Preço atualizado com sucesso'
+        ]);
     }
 
     /**
@@ -81,6 +97,16 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        //
+        $destroy = $schedule->delete();
+
+        if (!$destroy) {
+            return response()->json([
+                'message' => 'Não foi possivel excluir.'
+            ],Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Foi excluido com sucesso.'
+        ]);
     }
 }
