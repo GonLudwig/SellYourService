@@ -17,7 +17,9 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name(),
+            'email' => fake()->email(),
+            'cell_phone' => fake()->randomNumber(9, True)
         ];
     }
 }
