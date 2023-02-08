@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPriceController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,3 +45,14 @@ Route::get('/product/{product}', [ProductController::class, 'show']);
 Route::put('/product/{product}', [ProductController::class, 'update']);
 Route::delete('/product/{product}', [ProductController::class, 'destroy']);
 
+Route::get('/client', [ClientController::class, 'index']);
+Route::post('/client', [ClientController::class, 'store']);
+Route::get('/client/{client}', [ClientController::class, 'show']);
+Route::put('/client/{client}', [ClientController::class, 'update']);
+Route::delete('/client/{client}', [ClientController::class, 'destroy']);
+
+Route::get('/schedule', [ScheduleController::class, 'index']);
+Route::post('/schedule', [ScheduleController::class, 'store']);
+Route::get('/schedule/{schedule}', [ScheduleController::class, 'show']);
+Route::put('/schedule/{schedule}', [ScheduleController::class, 'update']);
+Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy']);
