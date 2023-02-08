@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('clients');
             $table->timestamp('check_in');
             $table->timestamp('check_out');
-            $table->boolean('confirmation');
+            $table->boolean('confirmation')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
