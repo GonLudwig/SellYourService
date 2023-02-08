@@ -13,7 +13,7 @@ class UpdateClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,24 @@ class UpdateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:50',
+            'email' => 'email',
+            'cell_phone' => 'required|integer'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatorio!',
+            'name.max' => 'O limite maximo de caracteres para este campo e 50.',
+            'email.email' => 'O campo precisar possuir um email valido.',
+            'cell_phone.integer' => 'Este campo aceita somente numeros.'
         ];
     }
 }
